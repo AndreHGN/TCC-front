@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { ApollonEditor, ApollonMode, ApollonOptions, Locale, UMLDiagramType } from '@ls1intum/apollon';
 import './App.css';
+import { ApollonEditorComponent } from './components/apollon-editor.component';
 
 function App() {
+  const [editor, setEditor] = useState<ApollonEditor>();
+
+  const options: ApollonOptions = {
+    type: UMLDiagramType.ClassDiagram,
+    mode: ApollonMode.Modelling,
+    readonly: false,
+    enablePopups: true,
+    copyPasteToClipboard: true,
+    locale: Locale.en,
+    colorEnabled: true,
+    model: undefined,
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApollonEditorComponent options={options} setEditor={setEditor} />
   );
 }
 
