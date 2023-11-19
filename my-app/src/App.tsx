@@ -38,8 +38,25 @@ function App() {
     }
   }
 
+  const handleDownloadJSON = () => {
+    const data = JSON.stringify(diagram);
+    const blob = new Blob([data], {type: "application/json"});
+    const objectUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+
+    link.setAttribute('href', objectUrl);
+    link.setAttribute('download', 'teste');
+    link.style.display = 'none';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   return (
     <Fragment>
+      <button onClick={handleDownloadJSON}>Baixar JSON</button>
       <input type="file" onChange={handleImportFile} value={undefined}/>
       <ApollonEditorComponent options={options} setEditor={setEditor} setDiagram={setDiagram}/>
     </Fragment>
