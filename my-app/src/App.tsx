@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import { ApollonEditor, ApollonMode, ApollonOptions, Locale, UMLDiagramType, SVG } from '@ls1intum/apollon';
+import { Button } from 'react-bootstrap';
 import './App.css';
 import { ApollonEditorComponent } from './components/apollon-editor/apollon-editor.component';
 
@@ -74,7 +75,7 @@ function App() {
 
   return (
     <Fragment>
-      <button onClick={exportPng}>Baixar PNG</button>
+      <Button variant='secondary' onClick={exportPng}>Baixar PNG</Button>
       <button onClick={handleDownloadJSON}>Baixar JSON</button>
       <input type="file" onChange={handleImportFile} value={undefined}/>
       <ApollonEditorComponent options={options} setEditor={setEditor} setDiagram={setDiagram}/>
