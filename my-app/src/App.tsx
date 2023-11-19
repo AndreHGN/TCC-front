@@ -3,6 +3,7 @@ import { ApollonEditor, ApollonMode, ApollonOptions, Locale, UMLDiagramType, SVG
 import { Button } from 'react-bootstrap';
 import './App.css';
 import { ApollonEditorComponent } from './components/apollon-editor/apollon-editor.component';
+import { NavigationBar } from './components/navbar/navbar.component';
 
 function App() {
   const [editor, setEditor] = useState<ApollonEditor>();
@@ -75,6 +76,7 @@ function App() {
 
   return (
     <Fragment>
+      <NavigationBar/>
       <Button variant='secondary' onClick={exportPng}>Baixar PNG</Button>
       <button onClick={handleDownloadJSON}>Baixar JSON</button>
       <input type="file" onChange={handleImportFile} value={undefined}/>
