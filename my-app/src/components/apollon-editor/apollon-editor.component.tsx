@@ -1,25 +1,30 @@
 import { ApollonEditor, ApollonOptions } from "@ls1intum/apollon";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
+import { DiagramContext } from "../contexts/diagram-context";
+import { ApollonContext } from "../contexts/editor-context";
 
-interface Props{
-  options: ApollonOptions;
-  setEditor: (editor: ApollonEditor) => void;
-  setDiagram: (diagram: any) => void;
-}
-
-export const ApollonEditorComponent = ({options, setEditor, setDiagram}: Props): React.ReactElement => {
+export const ApollonEditorComponent = (): React.ReactElement => {
   const ref = useRef<HTMLDivElement>(null);
+
+  const { options, setEditor } = useContext(ApollonContext);
+
+  const { setDiagram } = useContext(DiagramContext);
 
   useEffect(() => {
     if (ref.current) {
-      const editor = new ApollonEditor(ref.current, options);
-      setEditor(editor);
+      const editor = new ApollonEditor(ref.current, options as ApollonOptions);
+      setEditor?.(editor);
 
       editor.subscribeToModelChange((model) => {
-        setDiagram(model);
+        setDiagram?.(prevState => {
+          return {
+            ...prevState,
+            model
+          }
+        });
       })
     }
-  }, [options, setEditor, setDiagram]);
+  }, [setDiagram, options, setEditor]);
 
   return <div ref={ref} />;
 }

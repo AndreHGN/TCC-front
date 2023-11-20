@@ -1,15 +1,14 @@
-import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
-import { ApollonEditor, ApollonMode, ApollonOptions, Locale, UMLDiagramType, SVG } from '@ls1intum/apollon';
+import React, { ChangeEvent, useState } from 'react';
+import { ApollonEditor, ApollonMode, Locale, UMLDiagramType, SVG, ApollonOptions } from '@ls1intum/apollon';
 import { Button } from 'react-bootstrap';
-import './App.css';
 import { ApollonEditorComponent } from './components/apollon-editor/apollon-editor.component';
 import { NavigationBar } from './components/navbar/navbar.component';
+import { Diagram, DiagramContext, DiagramContextType } from './components/contexts/diagram-context';
+import { ApollonContextType, ApollonContext } from './components/contexts/editor-context';
 
 function App() {
   const [editor, setEditor] = useState<ApollonEditor>();
-  const [diagram, setDiagram] = useState<any>();
-
-  const [options, setOptions] =useState<ApollonOptions>({
+  const [options, setOptions] = useState<ApollonOptions>({
     type: UMLDiagramType.ClassDiagram,
     mode: ApollonMode.Modelling,
     readonly: false,
@@ -18,13 +17,21 @@ function App() {
     locale: Locale.en,
     colorEnabled: true,
     model: undefined,
-  });
+  })
+  
+  const [diagram, setDiagram] = useState<Diagram>();
 
-  useEffect(() => {
-    editor?.nextRender.then(() => {
-      if (diagram) console.log(diagram);
-    });
-  }, [editor, diagram]);
+  const apollonContextValue: ApollonContextType = {
+    editor,
+    options,
+    setEditor,
+    setOptions,
+  }
+
+  const diagramContextValue: DiagramContextType = {
+    diagram,
+    setDiagram,
+  };
 
   const handleImportFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -34,14 +41,15 @@ function App() {
       reader.onload = (e) => {
         if (e.target?.result) {
           const model = JSON.parse(e.target.result as string);
-          setOptions({...options, model: model});
+          setOptions({...options, model});
+          setDiagram({...diagram, model});
         }
       }
     }
   }
 
   const handleDownloadJSON = () => {
-    const data = JSON.stringify(diagram);
+    const data = JSON.stringify(diagram?.model);
     const blob = new Blob([data], {type: "application/json"});
     const objectUrl = URL.createObjectURL(blob);
 
@@ -75,13 +83,15 @@ function App() {
   }
 
   return (
-    <Fragment>
-      <NavigationBar/>
-      <Button variant='secondary' onClick={exportPng}>Baixar PNG</Button>
-      <button onClick={handleDownloadJSON}>Baixar JSON</button>
-      <input type="file" onChange={handleImportFile} value={undefined}/>
-      <ApollonEditorComponent options={options} setEditor={setEditor} setDiagram={setDiagram}/>
-    </Fragment>
+    <ApollonContext.Provider value={apollonContextValue}>
+      <DiagramContext.Provider value={diagramContextValue}>
+        <NavigationBar/>
+        <Button variant='secondary' onClick={exportPng}>Baixar PNG</Button>
+        <button onClick={handleDownloadJSON}>Baixar JSON</button>
+        <input type="file" onChange={handleImportFile} value={undefined}/>
+        <ApollonEditorComponent />
+      </DiagramContext.Provider>
+    </ApollonContext.Provider>
   );
 }
 
