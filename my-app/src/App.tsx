@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { ApollonEditor, ApollonMode, Locale, UMLDiagramType, SVG, ApollonOptions } from '@ls1intum/apollon';
 import { Button } from 'react-bootstrap';
 import { ApollonEditorComponent } from './components/apollon-editor/apollon-editor.component';
@@ -19,7 +19,11 @@ function App() {
     model: undefined,
   })
   
-  const [diagram, setDiagram] = useState<Diagram>();
+  const [diagram, setDiagram] = useState<Diagram>({
+    name: 'Untitled',
+    designPattern: 'MVC',
+    model: undefined,
+  });
 
   const apollonContextValue: ApollonContextType = {
     editor,
@@ -32,21 +36,6 @@ function App() {
     diagram,
     setDiagram,
   };
-
-  const handleImportFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = (e) => {
-        if (e.target?.result) {
-          const model = JSON.parse(e.target.result as string);
-          setOptions({...options, model});
-          setDiagram({...diagram, model});
-        }
-      }
-    }
-  }
 
   const handleDownloadJSON = () => {
     const data = JSON.stringify(diagram?.model);
@@ -85,10 +74,11 @@ function App() {
   return (
     <ApollonContext.Provider value={apollonContextValue}>
       <DiagramContext.Provider value={diagramContextValue}>
+        {diagram?.name}
+        {diagram?.designPattern}
         <NavigationBar/>
         <Button variant='secondary' onClick={exportPng}>Baixar PNG</Button>
         <button onClick={handleDownloadJSON}>Baixar JSON</button>
-        <input type="file" onChange={handleImportFile} value={undefined}/>
         <ApollonEditorComponent />
       </DiagramContext.Provider>
     </ApollonContext.Provider>
