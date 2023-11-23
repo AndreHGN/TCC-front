@@ -9,6 +9,7 @@ import { convertRenderedSVGToPNG } from '../../utils/convert-rendered-svg-to-png
 import { NavbarTitle } from './title.component';
 import { DesignPatternBadge } from './design-pattern-badge.component';
 import styled from 'styled-components';
+import { AssignDesignPatternModal } from '../assign-pattern-modal/assign-pattern-modal.component';
 
 const HorizontalLine = styled.hr`
   margin: 8px 0;
@@ -18,6 +19,7 @@ const HorizontalLine = styled.hr`
 export const NavigationBar = (): React.ReactElement => {
   const [showNewFileModal, setShowNewFileModal] = useState(false);
   const [showLoadFileModal, setShowLoadFileModal] = useState(false);
+  const [showAssignPatternModal, setShowAssignPatternModal] = useState(false);
 
   const { diagram } = useContext(DiagramContext);
   const { editor } = useContext(ApollonContext);
@@ -41,7 +43,7 @@ export const NavigationBar = (): React.ReactElement => {
           <div className='flex-column'>
             <div className='d-flex align-items-center'>
               <NavbarTitle />
-              {diagram?.designPattern && <DesignPatternBadge className='mx-3' designPattern={diagram?.designPattern} />}
+              <DesignPatternBadge className='mx-3' designPattern={diagram?.designPattern} onClick={() => setShowAssignPatternModal(true)}/>
             </div>
             <HorizontalLine />
             <div>
@@ -64,6 +66,7 @@ export const NavigationBar = (): React.ReactElement => {
       </Navbar>
       <NewFileModal show={showNewFileModal} onClose={() => setShowNewFileModal(false)}/>
       <LoadFileModal show={showLoadFileModal} onClose={() => setShowLoadFileModal(false)} />
+      <AssignDesignPatternModal show={showAssignPatternModal} onClose={() => setShowAssignPatternModal(false)} />
     </Fragment>
   )
 }
