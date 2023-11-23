@@ -20,7 +20,7 @@ function App() {
   
   const [diagram, setDiagram] = useState<Diagram>({
     name: 'Untitled',
-    designPattern: 'MVC',
+    designPattern: undefined,
     model: undefined,
   });
 
