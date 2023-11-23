@@ -28,7 +28,7 @@ export const NavigationBar = (): React.ReactElement => {
 
   return (
     <Fragment>
-      <Navbar expand='lg'>
+      <Navbar expand='lg' sticky='top' bg='light'>
         <Navbar.Collapse>
           <Nav className='me-auto'>
             <NavDropdown title="File">
