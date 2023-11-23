@@ -12,8 +12,9 @@ import styled from 'styled-components';
 import { AssignDesignPatternModal } from '../assign-pattern-modal/assign-pattern-modal.component';
 
 const HorizontalLine = styled.hr`
-  margin: 8px 0;
-  border: 1px solid gray;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  border-top: 1px solid gray;
 `
 
 export const NavigationBar = (): React.ReactElement => {
@@ -47,7 +48,7 @@ export const NavigationBar = (): React.ReactElement => {
             </div>
             <HorizontalLine />
             <div>
-              <Nav variant='underline' className='me-auto'>
+              <Nav variant='underline' className='me-auto gap-0'>
                 <NavDropdown className='fs-5' title="File">
                   <NavDropdown.Item onClick={() => setShowNewFileModal(true)}>New</NavDropdown.Item>
                   <NavDropdown.Item onClick={() => setShowLoadFileModal(true)}>Load diagram</NavDropdown.Item>

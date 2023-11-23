@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { DiagramContext } from '../contexts/diagram-context';
 
 const Input = styled.input`
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
   background-color: transparent;
   border: 1px solid transparent;
