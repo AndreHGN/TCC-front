@@ -1,19 +1,15 @@
 import React from 'react';
-import { Badge } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { DesignPatterns } from '../../enum/design-patterns';
-import styled from 'styled-components';
 
 interface DesignPatternBadgeProps {
   designPattern?: DesignPatterns;
   className?: string;
+  onClick?: () => void;
 }
 
-const CustomBadge = styled(Badge)`
-  font-size: 24px;
-`
-
-export const DesignPatternBadge = ({ designPattern, className }: DesignPatternBadgeProps): React.ReactElement => {
-  return  (
-    <CustomBadge className={className} bg='info'>{designPattern}</CustomBadge>
-  )
+export const DesignPatternBadge = ({ designPattern, className, onClick }: DesignPatternBadgeProps): React.ReactElement => {  
+  return designPattern
+    ? <Button onClick={onClick} className={'btn-lg fw-bold text-light ' + className} variant='info'>{designPattern}</Button>
+    : <Button onClick={onClick} variant='secondary'>Assign design pattern</Button>
 }
