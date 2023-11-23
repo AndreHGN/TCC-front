@@ -29,6 +29,8 @@ export const NewFileModal = ({show, onClose}: NewFileModalProps): React.ReactEle
     const formDataObj = Object.fromEntries(formData.entries());
     const fileName = formDataObj.fileName?.toString();
     const designPattern = formDataObj.designPattern?.toString();
+
+    console.log(formDataObj);
     
     setDiagram?.({
       name: fileName,
@@ -57,13 +59,13 @@ export const NewFileModal = ({show, onClose}: NewFileModalProps): React.ReactEle
           <Form.Control name='fileName' required type='text' defaultValue='Untitled' />
         </Form.Group>
         <Form.Group className='mb-4'>
-          <Form.Label className='fw-semibold fs-5'>Design pattern</Form.Label>
+          <Form.Label className='fw-semibold fs-5'>Design pattern template</Form.Label>
           <Nav
             variant='underline'
             justify
             activeKey={designPatternType}
             onSelect={(type) => setDesignPatternType(type as DesignPatternTypes)}
-            className='mb-2'
+            className='me-auto mb-2'
           >
             <Nav.Item>
               <Nav.Link eventKey={DesignPatternTypes.Behavioral}>{DesignPatternTypes.Behavioral}</Nav.Link>
