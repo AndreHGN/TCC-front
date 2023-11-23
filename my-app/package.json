@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@ls1intum/apollon": "^3.0.6",
+    "styled-components": "^6.1.1",
     "webpack": "^5.89.0"
   }
 }

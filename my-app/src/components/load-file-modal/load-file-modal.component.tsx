@@ -31,9 +31,9 @@ export const LoadFileModal = ({show, onClose}: LoadFileModalProps): React.ReactE
     reader.readAsText(file as Blob, "UTF-8");
     reader.onload = (e) => {
       if (e.target?.result) {
-        const model = JSON.parse(e.target.result as string);
-        updateDiagramModel(model);
-        setDiagram?.(prevState => { return { ...prevState, name: fileName } })
+        const jsonDiagram = JSON.parse(e.target.result as string);
+        updateDiagramModel(jsonDiagram.model);
+        setDiagram?.(prevState => { return { ...prevState, name: fileName, designPattern: jsonDiagram.designPattern } })
       }
     }
 

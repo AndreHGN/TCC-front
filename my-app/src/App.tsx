@@ -39,8 +39,6 @@ function App() {
   return (
     <ApollonContext.Provider value={apollonContextValue}>
       <DiagramContext.Provider value={diagramContextValue}>
-        {diagram?.name}
-        {diagram?.designPattern}
         <NavigationBar/>
         <ApollonEditorComponent />
       </DiagramContext.Provider>
