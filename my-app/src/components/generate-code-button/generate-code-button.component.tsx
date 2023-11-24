@@ -22,7 +22,6 @@ export const GenerateCodeButton = (): React.ReactElement => {
         responseType: 'arraybuffer',
       }
     ).then(response => {
-      console.log(response.data);
       const blob = new Blob([response.data]);
       downloadLink(blob, `${diagram?.name}.zip`);
     }).finally(() => {
