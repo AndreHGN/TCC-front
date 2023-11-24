@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react';
-import { Button, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { NewFileModal } from '../new-file-modal/new-file-modal.component';
 import { LoadFileModal } from '../load-file-modal/load-file-modal.component';
 import { DiagramContext } from '../contexts/diagram-context';
@@ -10,6 +10,7 @@ import { NavbarTitle } from './title.component';
 import { DesignPatternBadge } from './design-pattern-badge.component';
 import styled from 'styled-components';
 import { AssignDesignPatternModal } from '../assign-pattern-modal/assign-pattern-modal.component';
+import { GenerateCodeButton } from '../generate-code-button/generate-code-button.component';
 
 const HorizontalLine = styled.hr`
   margin-top: 4px;
@@ -61,7 +62,7 @@ export const NavigationBar = (): React.ReactElement => {
             </div>
           </div>
           <div>
-            <Button className='btn-lg'>Generate Code Template</Button>
+            <GenerateCodeButton />
           </div>
         </Navbar.Collapse>
       </Navbar>
