@@ -4,6 +4,7 @@ import { ApollonEditorComponent } from './components/apollon-editor/apollon-edit
 import { NavigationBar } from './components/navbar/navbar.component';
 import { Diagram, DiagramContext, DiagramContextType } from './components/contexts/diagram-context';
 import { ApollonContextType, ApollonContext } from './components/contexts/editor-context';
+import { FileHandleContext, FileHandleContextType } from './components/contexts/file-handle-context';
 
 function App() {
   const [editor, setEditor] = useState<ApollonEditor>();
@@ -22,7 +23,10 @@ function App() {
     name: 'Untitled',
     designPattern: undefined,
     model: undefined,
+    isModified: false,
   });
+
+  const [fileHandle, setFileHandle] = useState<FileSystemFileHandle>();
 
   const apollonContextValue: ApollonContextType = {
     editor,
@@ -36,13 +40,22 @@ function App() {
     setDiagram,
   };
 
+  const fileHandleContextValue: FileHandleContextType = {
+    fileHandle,
+    setFileHandle,
+  }
+    
+  console.log(diagram.isModified);
+
   return (
-    <ApollonContext.Provider value={apollonContextValue}>
-      <DiagramContext.Provider value={diagramContextValue}>
-        <NavigationBar/>
-        <ApollonEditorComponent />
-      </DiagramContext.Provider>
-    </ApollonContext.Provider>
+    <FileHandleContext.Provider value={fileHandleContextValue}>
+      <ApollonContext.Provider value={apollonContextValue}>
+        <DiagramContext.Provider value={diagramContextValue}>
+          <NavigationBar/>
+          <ApollonEditorComponent />
+        </DiagramContext.Provider>
+      </ApollonContext.Provider>
+    </FileHandleContext.Provider>
   );
 }
 

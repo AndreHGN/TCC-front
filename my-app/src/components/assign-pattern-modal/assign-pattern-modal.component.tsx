@@ -27,6 +27,7 @@ export const AssignDesignPatternModal = ({show, onClose}: AssignDesignPatternMod
       return {
         ...prevState,
         designPattern: selectedDesignPattern,
+        isModified: true,
       }
     });
 

@@ -5,6 +5,7 @@ import { useUpdateDiagramModel } from '../../hooks/use-update-diagram-model';
 import { DesignPatterns } from '../../enum/design-patterns';
 import { getDesignPatternModel } from '../../utils/design-pattern';
 import { DesignPatternSelection } from '../design-pattern-selection/design-pattern-selection.component';
+import { FileHandleContext } from '../contexts/file-handle-context';
 
 interface NewFileModalProps {
   show: boolean;
@@ -16,7 +17,8 @@ export const NewFileModal = ({show, onClose}: NewFileModalProps): React.ReactEle
   const [selectedDesignPattern, setSelectedDesignPattern] = useState<DesignPatterns>();
 
   const { setDiagram } = useContext(DiagramContext);
-  const { updateDiagramModel } = useUpdateDiagramModel()
+  const { updateDiagramModel } = useUpdateDiagramModel();
+  const { setFileHandle } = useContext(FileHandleContext);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -29,15 +31,19 @@ export const NewFileModal = ({show, onClose}: NewFileModalProps): React.ReactEle
     const formData = new FormData(form);
     const formDataObj = Object.fromEntries(formData.entries());
     
-    setDiagram?.({
-      name: formDataObj.fileName?.toString(),
-      designPattern: selectedDesignPattern,
-    })
-    
     updateDiagramModel(selectedDesignPattern
       ? getDesignPatternModel(selectedDesignPattern)
       : undefined);
+
+    setDiagram?.(prevState => {
+      return {
+        ...prevState,
+        name: formDataObj.diagramName?.toString(),
+        designPattern: selectedDesignPattern,
+      }
+    })
     
+    setFileHandle?.(undefined);
     setValidated(true);
     onClose();
   }
@@ -50,8 +56,8 @@ export const NewFileModal = ({show, onClose}: NewFileModalProps): React.ReactEle
         </Modal.Header>
         <Modal.Body>
           <Form.Group className='mb-4'>
-            <Form.Label className='fw-semibold fs-5'>File name</Form.Label>
-            <Form.Control name='fileName' required type='text' defaultValue='Untitled' />
+            <Form.Label className='fw-semibold fs-5'>Diagram name</Form.Label>
+            <Form.Control name='diagramName' required type='text' defaultValue='Untitled' />
           </Form.Group>
           <DesignPatternSelection
             selectedDesignPattern={selectedDesignPattern}
