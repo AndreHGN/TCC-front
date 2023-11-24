@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@ls1intum/apollon": "^3.0.6",
+    "@types/wicg-file-system-access": "^2023.10.4",
     "styled-components": "^6.1.1",
     "webpack": "^5.89.0"
   }
