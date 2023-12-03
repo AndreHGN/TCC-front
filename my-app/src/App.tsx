@@ -23,7 +23,6 @@ function App() {
     name: 'Untitled',
     designPattern: undefined,
     model: undefined,
-    isModified: false,
   });
 
   const [fileHandle, setFileHandle] = useState<FileSystemFileHandle>();
@@ -45,8 +44,6 @@ function App() {
     setFileHandle,
   }
     
-  console.log(diagram.isModified);
-
   return (
     <FileHandleContext.Provider value={fileHandleContextValue}>
       <ApollonContext.Provider value={apollonContextValue}>

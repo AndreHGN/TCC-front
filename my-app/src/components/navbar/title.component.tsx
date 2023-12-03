@@ -23,7 +23,7 @@ export const NavbarTitle = ({ className }: NavbarTitleProps): React.ReactElement
   
   const handleTitleChange = (input: HTMLInputElement) => {
     setDiagram?.(prevState => {
-      return {...prevState, name: input.value, isModified: true}
+      return { ...prevState, name: input.value }
     });
   }
 
@@ -31,7 +31,7 @@ export const NavbarTitle = ({ className }: NavbarTitleProps): React.ReactElement
     if (!input.value) {
       input.value = 'Untitled';
       setDiagram?.(prevState => {
-        return {...prevState, name: 'Untitled', isModified: true}
+        return { ...prevState, name: 'Untitled' }
       });
     }
   }
