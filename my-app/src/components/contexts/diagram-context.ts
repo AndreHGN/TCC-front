@@ -6,13 +6,11 @@ export type Diagram = {
   name?: string;
   model?: UMLModel;
   designPattern?: DesignPatterns;
-  isModified: boolean;
 }
 
 export type DiagramContextType = {
   diagram?: Diagram;
   setDiagram?: React.Dispatch<React.SetStateAction<Diagram>>;
-  setIsModified?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const DiagramContext = createContext<DiagramContextType>({});
