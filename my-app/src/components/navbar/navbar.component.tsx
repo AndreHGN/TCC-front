@@ -48,6 +48,24 @@ export const NavigationBar = (): React.ReactElement => {
     });
   }
 
+  const handleExportToSVG = () => {
+    editor?.exportAsSVG().then(renderedSVG => {
+      const options: SaveFilePickerOptions = {
+        types: [
+          {
+            description: 'SVG Image',
+            accept: {
+              'image/svg+xml': ['.svg'],
+            },
+          },
+        ],
+      }; 
+      window.showSaveFilePicker(options).then(svgFileHandle => {
+        writeFile(svgFileHandle, renderedSVG.svg);
+      }).catch(err => console.log(err));
+    })
+  }
+
   return (
     <Fragment>
       <Navbar expand='lg' sticky='top' bg='light' className='border-bottom border-dark'>
@@ -67,6 +85,7 @@ export const NavigationBar = (): React.ReactElement => {
                 </NavDropdown>
                 <NavDropdown className='fs-5' title='Export'>
                   <NavDropdown.Item onClick={handleExportToPNG}>as PNG image</NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleExportToSVG}>as SVG image</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
               {!!fileHandle && <NavbarText>{fileHandle.name} loaded</NavbarText>}
