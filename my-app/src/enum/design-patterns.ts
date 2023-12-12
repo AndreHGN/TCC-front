@@ -1,5 +1,6 @@
 export enum DesignPatterns {
   Adapter = 'Adapter',
+  Command = 'Command',
   Observer = 'Observer',
   Strategy = 'Strategy',
   Singleton = 'Singleton',

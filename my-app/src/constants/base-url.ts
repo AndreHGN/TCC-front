@@ -1,1 +1,1 @@
-export const baseUrl = 'http://localhost:3000';
+export const baseUrl = 'https://hephaestus-5t48.onrender.com';
